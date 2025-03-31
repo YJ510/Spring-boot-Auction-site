@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,6 +21,40 @@ public class ItemController {
         for(Item item:items){System.out.println(item);}
         return "item/itemList";}
 
+    @GetMapping("/itemDetail/{id}")
+    public String productDetail(@PathVariable Long id, Model model) {
+        // Optional<Item> item = itemRepository.findById(id);
+        Optional<Item> item = itemService.itemfindById(id);  // service에서 findById 호출 (ItemService 작성 필요)
+
+        if (item.isPresent()) {
+            // 상품이 존재할 경우, 상세 정보를 출력하고 model에 담아서 페이지에 전달
+            System.out.println("ID : " + item.get().getId());
+            System.out.println("상품 이미지 URL : " + item.get().getItemImageUrl());
+            System.out.println("상품명 : " + item.get().getItemName());
+            System.out.println("카테고리 : " + item.get().getCategoryFullName());
+            System.out.println("최저 입찰가 : " + item.get().getMinBidPrice());
+            System.out.println("감정가 : " + item.get().getAppraisalAmount());
+            System.out.println("입찰 시작일 : " + item.get().getBidStartDateTime());
+            System.out.println("입찰 마감일 : " + item.get().getBidEndDateTime());
+            System.out.println("물건 상태 : " + item.get().getItemStatus());
+            System.out.println("물건 소재지 : " + item.get().getLandAddress());
+            System.out.println("처분 방식 : " + item.get().getDisposalMethodName());
+            System.out.println("입찰 방식 : " + item.get().getBidMethodName());
+            System.out.println("유찰 횟수 : " + item.get().getFailedBidCount());
+            System.out.println("조회수 : " + item.get().getViewCount());
+            System.out.println("상세 정보 : " + item.get().getItemDetail());
+
+            // 모델에 상품 상세 정보를 담아서 페이지로 전달
+            model.addAttribute("item", item.get());
+
+            // 타임리프로 처리할 페이지로 이동
+            return "item/itemDetail";  // productDetail.html 페이지로 이동
+        } else {
+            // 상품을 찾을 수 없을 경우, 목록 페이지로 리디렉션
+            System.out.println("상품 경로 없음");
+            return "redirect:/itemList";  // 상품 목록 페이지로 리디렉션
+        }
+    }
     /*
     @GetMapping("/productRegister")
     String productRegister(){

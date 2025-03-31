@@ -2,23 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add CSS and JS to Thymeleaf</title>
+    <title>공매물건 조회</title>
     <link th:href="@{/styles/styleList.css}" rel="stylesheet" />
-    <!--
-    <script type="text/javascript" th:src="@{/javascript/List.js}"></script>
-    -->
+    <script>
+        // 주어진 문자열 'YYYYMMDDHHMMSS'을 'YYYY-MM-DD HH:mm:ss' 형식으로 변환하는 함수
+        function formatDateString(dateString) {
+            const year = dateString.slice(0, 4);
+            const month = dateString.slice(4, 6);
+            const day = dateString.slice(6, 8);
+            const hour = dateString.slice(8, 10);
+            const minute = dateString.slice(10, 12);
+            const second = dateString.slice(12, 14);
+            return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+        }
+
+        // 날짜와 시간 차이를 계산하는 함수
+        function calculateTimeDifference(endDate, startDate) {
+            const now = new Date();
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            const timeRemaining = {
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            };
+
+            let remainingText = '';
+
+            if (now < start) {
+                const diff = start - now;
+                timeRemaining.days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                timeRemaining.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                timeRemaining.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                timeRemaining.seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                remainingText = `입찰 시작까지 남은 시간: ${timeRemaining.days}일 ${timeRemaining.hours}시간 ${timeRemaining.minutes}분 ${timeRemaining.seconds}초`;
+            } else if (now < end) {
+                const diff = end - now;
+                timeRemaining.days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                timeRemaining.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                timeRemaining.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                timeRemaining.seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                remainingText = `입찰 마감까지 남은 시간: ${timeRemaining.days}일 ${timeRemaining.hours}시간 ${timeRemaining.minutes}분 ${timeRemaining.seconds}초`;
+
+                // 남은 시간이 하루(24시간) 이하일 경우 빨간색으로 표시
+                if (timeRemaining.days === 0 && timeRemaining.hours <= 24) {
+                    return { text: remainingText, color: 'red' };
+                }
+            } else {
+                remainingText = '입찰 마감';
+            }
+
+            return { text: remainingText, color: '' };
+        }
+
+        // 페이지가 로드되면 입찰 시간을 계산하여 표시
+        window.onload = function() {
+            const items = document.querySelectorAll('.product');
+            items.forEach(function(item) {
+                const bidEndDate = formatDateString(item.getAttribute('data-end-date'));
+                const bidStartDate = formatDateString(item.getAttribute('data-start-date'));
+                const statusElement = item.querySelector('.time-remaining');
+
+                const { text, color } = calculateTimeDifference(bidEndDate, bidStartDate);
+                statusElement.textContent = text;
+
+                // 빨간색으로 표시해야 할 경우 스타일을 적용
+                if (color === 'red') {
+                    statusElement.style.color = color;
+                }
+            });
+        };
+    </script>
 </head>
 <body>
 <header id="site-header">
     <div class="container">
-        <h1>Shopping cart <span>[</span> <em><a href="https://codepen.io/tag/rodeo-007" target="_blank">CodePen Challange</a></em> <span class="last-span is-open">]</span></h1>
+        <h1>공매물건 조회 <span>[</span> <em><a href="https://codepen.io/tag/rodeo-007" target="_blank">한국자산관리공사</a></em> <span class="last-span is-open">]</span></h1>
     </div>
 </header>
 
 <div class="container">
-
-    <section id="cart"  >
-        <article class="product" th:each="item:${items}">
+    <section id="cart">
+        <article class="product" th:each="item:${items}"
+                 th:attr="data-start-date=${item.bidStartDateTime}, data-end-date=${item.bidEndDateTime}"
+                 th:onclick="|window.location.href='/itemDetail/' + ${item.id}|">
             <header>
                 <a class="remove">
                     <img th:src="${item.itemImageUrl}" alt="">
@@ -26,27 +96,21 @@
             </header>
 
             <div class="content">
-
                 <h1 th:text="|[${item.categoryFullName}] ${item.itemName}|">공매 물건 명</h1>
-
                 <h3 class="basic" th:text="|소재지: ${item.roadAddress} / ${item.itemDetail}|"></h3>
-
             </div>
 
             <footer class="content">
-
                 <h2 class="item-state" th:text="${item.itemStatus}">
                     입찰 상태
                 </h2>
 
                 <h2 class="time-remaining">
-                    남은 입찰 기간
+                    <!-- 입찰 시작일과 마감일에 따른 남은 시간을 JavaScript로 계산하여 표시 -->
                 </h2>
             </footer>
         </article>
-
     </section>
-
 </div>
 
 </body>
