@@ -6,12 +6,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-
 @Entity
 @ToString
 @Getter
 @Setter
 public class Member {
+
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,8 @@ public class Member {
         @Column(nullable = false)
         //String password2;
         LocalDate birth;
+
+        @Column(nullable = false)
+        String role;
 
 }

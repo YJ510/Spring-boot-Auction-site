@@ -10,10 +10,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    void signUp(Member member){
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+    public void memberSignup(MemberCreateDTO memberCreateDTO){
+        Member member = new Member();
+        member.setEmail(memberCreateDTO.getEmail());
+        member.setName(memberCreateDTO.getName());
+        member.setPassword(passwordEncoder.encode(memberCreateDTO.getPassword()));
+        member.setBirth(memberCreateDTO.getBirth());
+        member.setRole("ADMIN");
         memberRepository.save(member);
     }
-
-
 }
