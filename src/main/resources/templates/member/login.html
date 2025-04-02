@@ -11,31 +11,15 @@
 <div class="wrapper">
     <div class="container">
 
-        <div class="signup">Sign Up</div>
-        <div class="login">Log In</div>
-
-        <form action="/signup" method="post" class="needs-validation" novalidate>
-            <div class="signup-form">
-                <!-- Email input with validation -->
-                <input type="email" id="email" name="email" placeholder="Your Email Address" class="input" required /><br />
-                <!-- Name input with validation -->
-                <input type="text" id="name" name="name" placeholder="Choose a Username" class="input" required /><br />
-                <!-- Password input with validation -->
-                <input type="password" id="password" name="password" placeholder="Choose a Password" class="input" required /><br />
-                <!-- Password confirmation input with validation -->
-                <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Your Password" class="input" required /><br />
-                <!-- Birth input with validation -->
-                <input type="date" class="form-control" id="birth" name="birth" required /><br />
-            </div>
-            <button type="submit" class="btn">Create account</button>
-        </form>
+        <div class="signup" onclick="window.location.href='/signup';">Sign Up</div>
+        <div class="login" onclick="window.location.href='/login';">Log In</div>
 
 
-        <form action="/login" method="post" class="needs-validation" novalidate>
+        <form action="/login-process" method="post" class="needs-validation" novalidate>
             <div class="login-form">
-                <input type="text" id="login_email" name="login_email" placeholder="Email or Username" class="input"><br />
-                <input type="password" id="login_password" name="login_password" placeholder="Password" class="input"><br />
-                <button type="submit" class="log in">Create account</button>
+                <input type="text" id="email" name="email" placeholder="Email" class="input" required><br />
+                <input type="password" id="password" name="password" placeholder="Password" class="input" required><br />
+                <button type="submit" class="btn">Log In</button>
                 <span><a href="#">I forgot my username or password.</a></span>
             </div>
         </form>

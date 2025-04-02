@@ -11,31 +11,24 @@
 <div class="wrapper">
     <div class="container">
 
-        <div class="signup">Sign Up</div>
-        <div class="login">Log In</div>
+        <div class="signup" onclick="window.location.href='/signup';">Sign Up</div>
+        <div class="login" onclick="window.location.href='/login';">Log In</div>
 
-        <form action="/member-signup" method="post" class="needs-validation" novalidate>
+        <form action="/signup" method="post" class="needs-validation" novalidate>
             <div class="signup-form">
                 <!-- Email input with validation -->
-                <input th:value= th:value="${joinDTO.email}" type="email" id="email" name="email" placeholder="Your Email Address" class="input" required /><br />
+                <input type="email" id="email" name="email" placeholder="Your Email Address" class="input" required /><br />
                 <!-- Name input with validation -->
-                <input th:value= th:value="${joinDTO.name}" type="text" id="name" name="name" placeholder="Choose a Username" class="input" required /><br />
+                <input type="text" id="name" name="name" placeholder="Choose a Username" class="input" required /><br />
                 <!-- Password input with validation -->
                 <input type="password" id="password" name="password" placeholder="Choose a Password" class="input" required /><br />
                 <!-- Password confirmation input with validation -->
                 <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm Your Password" class="input" required /><br />
                 <!-- Birth input with validation -->
-                <input  th:value="${joinDTO.birth}" type="date" class="form-control" id="birth" name="birth" required /><br />
+                <input type="date" class="form-control" id="birth" name="birth" required /><br />
+                <button type="submit" class="btn">Create account</button>
             </div>
-            <button type="submit" class="btn">Create account</button>
         </form>
-
-        <div class="login-form">
-            <input type="text" placeholder="Email or Username" class="input"><br />
-            <input type="password" placeholder="Password" class="input"><br />
-            <div class="btn">log in</div>
-            <span><a href="#">I forgot my username or password.</a></span>
-        </div>
 
     </div>
 </div>
