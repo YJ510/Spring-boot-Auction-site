@@ -1,0 +1,99 @@
+/* 기존 스타일 유지 */
+*{
+  margin: 0;
+  padding: 0;
+  font-family: roboto, sans-serif;
+}
+
+body{
+  background: #e9eaea;
+  font-family: roboto, sans-serif;
+  user-select: none;
+}
+
+.container{
+  width: 450px;
+  margin: 30px auto;
+}
+
+.signup,
+.login{
+  width: 50%;
+  background: #fff;
+  float: left;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: roboto, sans-serif;
+}
+
+.signup-form,
+.login-form{
+  background: #fff;
+  padding: 40px;
+  clear: both;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 400px;
+  font-family: roboto, sans-serif;
+}
+
+.input,
+.form-control {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  border: 2px solid #e9eaea;
+  color: #3e3e40;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.5s ease;
+  font-family: roboto, sans-serif;
+}
+
+.input:focus,
+.form-control:focus {
+  border: 2px solid #34b3a0;
+}
+
+.btn{
+  width: 100%;
+  background: #34b3a0;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-family: roboto, sans-serif;
+}
+
+span a{
+  text-decoration: none;
+  color: #000;
+  font-family: roboto, sans-serif;
+}
+
+/* Placeholder 스타일 유지 */
+::-webkit-input-placeholder {
+  color: #3e3e40;
+  font-family: roboto, sans-serif;
+}
+::-moz-placeholder {
+  color: #3e3e40;
+  font-family: roboto, sans-serif;
+}
+:-ms-input-placeholder {
+  color: #3e3e40;
+  font-family: roboto, sans-serif;
+}
+:-moz-placeholder {
+  color: #3e3e40;
+  font-family: roboto, sans-serif;
+}

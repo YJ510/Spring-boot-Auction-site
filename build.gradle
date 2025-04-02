@@ -36,6 +36,14 @@ dependencies {
 
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	implementation 'mysql:mysql-connector-java:8.0.33'
+
+//implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+//	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
