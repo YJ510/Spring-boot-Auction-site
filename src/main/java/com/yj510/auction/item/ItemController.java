@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +57,31 @@ public class ItemController {
             return "redirect:/itemList";  // 상품 목록 페이지로 리디렉션
         }
     }
+
+    @GetMapping("/itemEdit/{id}")
+    String itemEdit(@PathVariable Long id, Model model){
+        Optional<Item> item = itemService.itemfindById(id);
+        if(item.isPresent()){
+            model.addAttribute("item",item.get());
+            return "item/itemEdit";
+        }else {
+            System.out.println("상품 경로 없음");
+            return "redirect:/itemList";
+        }
+    }
+
+    @PostMapping("/itemEdit")
+    String itemEdit(@ModelAttribute Item item){
+        itemService.itemSave(item);
+        return "redirect:/itemList";
+    }
+
+    @PostMapping("/itemDelete")
+    String deleteItem(@ModelAttribute Item item){
+        itemService.itemDeleteById(item.getId());
+        return "redirect:/itemList";
+    }
+
     /*
     @GetMapping("/productRegister")
     String productRegister(){
@@ -127,30 +154,6 @@ public class ItemController {
             return "redirect:/productList";
         }
     }
-
-    @GetMapping("/productEdit/{id}")
-    String productEdit(@PathVariable Long id, Model model){
-        //Optional<Product> product = productRepository.findById(id);
-        Optional<Item> item = itemService.itemfindById(id);
-        if(item.isPresent()){
-            model.addAttribute("item",item.get());
-            return "productEdit";
-        }else {
-            System.out.println("상품 경로 없음");
-            return "redirect:/productList";
-        }
-    }
-
-    @PostMapping("/productEdit")
-    String productEdit(@ModelAttribute Item item){
-        //productRepository.save(product);
-        itemService.itemSave(item);
-        return "redirect:/productList";
-    }
-
-    String deleteProduct(@ModelAttribute Item item){
-        itemService.itemDeleteById(item.getId());
-        return "redirect:/productList";
-    }*/
+*/
 
 }

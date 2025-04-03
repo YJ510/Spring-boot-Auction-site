@@ -81,6 +81,12 @@
 <header id="site-header">
     <div class="container">
         <h1>공매물건 조회 <span>[</span> <em><a href="https://codepen.io/tag/rodeo-007" target="_blank">한국자산관리공사</a></em> <span class="last-span is-open">]</span></h1>
+        <!-- 로그인/로그아웃 링크 추가 -->
+        <div class="auth-links">
+            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/logout}">로그아웃</a>
+            <a th:unless="${#authorization.expression('isAuthenticated()')}" th:href="@{/login}">로그인</a>
+            <a th:unless="${#authorization.expression('isAuthenticated()')}" th:href="@{/signup}">회원가입</a>
+        </div>
     </div>
 </header>
 
@@ -88,7 +94,7 @@
     <section id="cart">
         <article class="product" th:each="item:${items}"
                  th:attr="data-start-date=${item.bidStartDateTime}, data-end-date=${item.bidEndDateTime}"
-                 th:onclick="|window.location.href='/itemDetail/' + ${item.id}|">
+                 th:onclick="|window.location.href='/itemDetail/' + ${item.id}|" >
             <header>
                 <a class="remove">
                     <img th:src="${item.itemImageUrl}" alt="">

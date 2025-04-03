@@ -17,8 +17,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화 (개발 단계)
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin()) // iframe 허용
+                        .contentSecurityPolicy(csp -> csp.policyDirectives("img-src * data:;")) // 외부 이미지 허용
+                )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**","/itemList", "/signup", "/login", "/login-process","/styles/**", "/javascript/**", "/images/**").permitAll() // 정적 리소스 허용
+                        .requestMatchers("/itemList", "/signup", "/login", "/login-process","/styles/**", "/javascript/**", "/images/**").permitAll() // 정적 리소스 허용
+                        .requestMatchers("/itemEdit/**", "/deleteItem/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login

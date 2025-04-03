@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세 조회</title>
+    <link href="styles/styleDetail.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .text-center {
+            text-align: center;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .product-image-wrapper {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .product-image {
+            max-width: 60%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .product-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .product-details th, .product-details td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        .product-details th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            text-align: center;
+        }
+        .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            background-color: #53b5aa;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center" style="color:#53b5aa;">상품 상세 조회</h2>
+    <div class="product">
+
+        <form th:action="@{/itemEdit}" method="post">
+            <input type="text" th:value="|${item.itemName}|" name="itemName" required>
+            <div class="product-image-wrapper">
+                <img th:src="${item.itemImageUrl}" alt="물건 이미지" class="product-image">
+                <input type="hidden" name="itemImageUrl" th:value="${item.itemImageUrl}">
+            </div>
+
+            <div class="product-details">
+                <table>
+                    <tr><th>ID</th><td><input type="number" th:value="${item.id}" name="id" readonly></td></tr>
+                    <tr><th>공고번호</th><td><input type="number" th:value="${item.publicNoticeNo}" name="publicNoticeNo"></td></tr>
+                    <tr><th>공매번호</th><td><input type="number" th:value="${item.auctionNo}" name="auctionNo"></td></tr>
+                    <tr><th>공매조건번호</th><td><input type="number" th:value="${item.auctionConditionNo}" name="auctionConditionNo"></td></tr>
+                    <tr><th>물건번호</th><td><input type="number" th:value="${item.itemNo}" name="itemNo"></td></tr>
+                    <tr><th>물건이력번호</th><td><input type="number" th:value="${item.itemHistoryNo}" name="itemHistoryNo"></td></tr>
+                    <tr><th>화면그룹코드</th><td><input type="text" th:value="${item.screenGroupCode}" name="screenGroupCode"></td></tr>
+                    <tr><th>용도명</th><td><input type="text" th:value="${item.categoryFullName}" name="categoryFullName"></td></tr>
+                    <tr><th>입찰번호</th><td><input type="text" th:value="${item.bidNo}" name="bidNo"></td></tr>
+                    <tr><th>물건관리번호</th><td><input type="text" th:value="${item.itemManagementNo}" name="itemManagementNo"></td></tr>
+
+                    <tr><th>물건소재지(지번)</th><td><input type="text" th:value="${item.landAddress}" name="landAddress"></td></tr>
+                    <tr><th>물건소재지(도로명)</th><td><input type="text" th:value="${item.roadAddress}" name="roadAddress"></td></tr>
+                    <tr><th>지번PNU</th><td> <input type="text" th:value="${item.landPnu}" name="landPnu"></td></tr>
+                    <tr><th>처분방식코드</th><td><input type="text" th:value="${item.disposalMethodCode}" name="disposalMethodCode"></td></tr>
+                    <tr><th>처분방식명</th><td><input type="text" th:value="${item.disposalMethodName}" name="disposalMethodName"></td></tr>
+                    <tr><th>입찰방식명</th><td><input type="text" th:value="${item.bidMethodName}" name="bidMethodName"></td></tr>
+                    <tr><th>최저입찰가</th><td><input type="text" th:value="${item.minBidPrice}" name="minBidPrice"></td></tr>
+                    <tr><th>감정가</th><td><input type="text" th:value="${item.appraisalAmount}" name="appraisalAmount"></td></tr>
+                    <tr><th>최저입찰가율</th><td><input type="text" th:value="${item.feeRate}" name="feeRate"></td></tr>
+
+                    <tr><th>입찰시작일시</th><td><input type="text" th:value="${item.bidStartDateTime}" name="bidStartDateTime"></td></tr>
+                    <tr><th>입찰마감일시</th><td><input type="text" th:value="${item.bidEndDateTime}" name="bidEndDateTime"></td></tr>
+                    <tr><th>물건상태</th><td><input type="text" th:value="${item.itemStatus}" name="itemStatus"></td></tr>
+                    <tr><th>유찰횟수</th><td><input type="number" th:value="${item.failedBidCount}" name="failedBidCount"></td></tr>
+                    <tr><th>조회수</th><td><input type="number" th:value="${item.viewCount}" name="viewCount" readonly></td></tr>
+
+                    <tr><th>제조사</th><td><input type="text" th:value="${item.manufacturer}" name="manufacturer"></td></tr>
+                    <tr><th>모델</th><td><input type="text" th:value="${item.model}" name="model"></td></tr>
+                    <tr><th>연월식</th><td><input type="text" th:value="${item.yearMonth}" name="yearMonth"></td></tr>
+                    <tr><th>변속기</th><td><input type="text" th:value="${item.transmission}" name="transmission"></td></tr>
+                    <tr><th>배기량</th><td><input type="text" th:value="${item.displacement}" name="displacement"></td></tr>
+                    <tr><th>주행거리</th><td><input type="text" th:value="${item.mileage}" name="mileage"></td></tr>
+                    <tr><th>연료</th><td><input type="text" th:value="${item.fuelType}" name="fuelType"></td></tr>
+                    <tr><th>법인명</th><td><input type="text" th:value="${item.corporationName}" name="corporationName"></td></tr>
+                    <tr><th>업종</th><td><input type="text" th:value="${item.businessType}" name="businessType"></td></tr>
+                    <tr><th>종목명</th><td><input type="text" th:value="${item.itemTypeName}" name="itemTypeName"></td></tr>
+                    <tr><th>회원권명</th><td><input type="text" th:value="${item.membershipName}" name="membershipName"></td></tr>
+                </table>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn">수정</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

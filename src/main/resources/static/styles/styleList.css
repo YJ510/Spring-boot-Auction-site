@@ -17,6 +17,7 @@ body {
 
 #site-header {
 	margin: 0 0 30px 0;
+	position: relative;
 }
 
 #site-header h1 {
@@ -364,4 +365,28 @@ a:hover {
 
 .added {
 	margin: 0 -50px 0 0 !important;
+}
+
+/* 로그인/로그아웃 링크 스타일 */
+.auth-links {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    font-size: 14px;
+    color: gray;
+    font-weight: normal; /* 글자 얇게 */
+}
+
+/* 개별 링크 스타일 */
+.auth-links a {
+    text-decoration: none;
+    color: gray;
+    font-weight: normal; /* 기존 스타일과 통일 */
+    margin-left: 10px;
+}
+
+/* 마우스 오버 효과 */
+.auth-links a:hover {
+    text-decoration: underline;
+    color: darkgray;
 }
